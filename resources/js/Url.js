@@ -10,6 +10,7 @@
         APP_LIST:CONTEXT + "/admin/app/list",
         INDEX_STATIC:CONTEXT + "/admin/index",
         APP_DETAIL:CONTEXT +"/admin/app/user/list",
+          UNBIND_APP:CONTEXT +"/admin/app/unbind/",
         DATA_LIST: CONTEXT + "/admin/platform/list",
         USER_UNBIND:CONTEXT + "/admin/user/unbind/",
         MENU_ALL: CONTEXT + "/admin/sys/allmenu/",

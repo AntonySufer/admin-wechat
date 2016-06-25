@@ -116,7 +116,7 @@
 
                     <a class="btn btn-default btn-xs purple" @click="item.show_modal=true"> <i class="fa fa-info"></i>详情</a>
 
-
+                    <a class="btn btn-default btn-xs purple" @click="unbind(item)"> <i class="fa fa-info"></i>解绑</a>
             </td>
 				</tr>
 	
@@ -129,6 +129,8 @@
    </div>
    </div>
    </div>
+
+
 </template>
 <script>
 
@@ -212,7 +214,16 @@ exportData () {
     let path =  Url.CONTEXT + "/admin/app/export" + params;
 
     window.location.href= path;
-}
+},
+      unbind(item){
+          var url = Url.UNBIND_APP+item.id;
+          var params = {};
+          ajaxUtil.doGet(url,params).then((xhr,response) => {
+              if(response.status != 200){
+                  return ajaxUtil.doError(response, this);
+              }
+          });
+      }
   
   },
   watch:{
