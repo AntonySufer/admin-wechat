@@ -116,7 +116,7 @@
 
                     <a class="btn btn-default btn-xs purple" @click="item.show_modal=true"> <i class="fa fa-info"></i>详情</a>
 
-                    <a class="btn btn-default btn-xs purple" @click="unbind(item)"> <i class="fa fa-info"></i>解绑</a>
+                    <a class="btn btn-default btn-xs purple" @click="unbind(item)" v-if="item.status == 0"> <i class="fa fa-info"></i>解绑</a>
             </td>
 				</tr>
 	
@@ -222,6 +222,8 @@ exportData () {
               if(response.status != 200){
                   return ajaxUtil.doError(response, this);
               }
+          alert("解绑成功");
+          this.updateData();
           });
       }
   

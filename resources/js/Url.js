@@ -1,5 +1,5 @@
 (function(){
-       var CONTEXT ="http://wx.mljiatest.cn/wechat.action";
+       var CONTEXT ="http://wx.mljiatest.cn/wechat";
 
       var  UPLOAD_URL = "http://upload.mljiatest.cn/upload/image";
 
