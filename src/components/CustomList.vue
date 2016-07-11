@@ -165,6 +165,7 @@ export default {
     unbind (id){
 	    console.log(id)
 	     var url = Url.USER_UNBIND + id;
+        console.log(url)
 	      ajaxUtil.doGet(url,null).then((xhr,response) =>{
 		    if(response.status != 200){
 			    return ajaxUtil.doError(response,this);

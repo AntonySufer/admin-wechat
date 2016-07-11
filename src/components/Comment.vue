@@ -99,11 +99,11 @@ export default {
 
         var items = JSON.parse(content);
         this.items = items;
-        this.totalRows = response.total_count;
-        if(response.total_count%this.rows == 0){
-	         this.totalPage = Math.floor(response.total_count/this.rows) ;
+        this.totalRows = response.totalCount;
+        if(response.totalCount%this.rows == 0){
+	         this.totalPage = Math.floor(response.totalCount/this.rows) ;
         }else{
-              this.totalPage = Math.floor(response.total_count/this.rows) +1;
+              this.totalPage = Math.floor(response.totalCount/this.rows) +1;
         }
     })
 

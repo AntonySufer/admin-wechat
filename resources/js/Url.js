@@ -1,10 +1,11 @@
 (function(){
-       var CONTEXT ="http://wx.mljiatest.cn/wechat";
+    var CONTEXT = "http://wx.mljia.cn/wechat";
 
-      var  UPLOAD_URL = "http://upload.mljiatest.cn/upload/image";
+    var UPLOAD_URL = "http://upload.mljia.cn/upload/image";
 
 
-      var Url={
+
+    var Url={
         MENU:CONTEXT +"/admin/sys/menu",
         CUSTOM_LIST:CONTEXT +"/admin/user/search",
         APP_LIST:CONTEXT + "/admin/app/list",

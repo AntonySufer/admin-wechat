@@ -110,7 +110,8 @@
             <a class="btn btn-sky" :class="{'disabled':tagList.length ==0 && shopList.length ==0}" @click="exportMaterial()">发布</a>
         </div>
 	</modal>
-    
+
+
      <modal :show.sync="showTagRel" title="导入美丽秘籍" width="1000px"> 										  
            <div slot="modal-body" >
                   <tag-rels :tag-id.sync="tagId"></tag-rels>
@@ -266,7 +267,6 @@
 	            params.content_source_url = this.contentSourceUrl;
 	            params.show_cover_pic =this.showCoverPic;
 	            params.cover_file_id = this.coverFileId;
-	            params.author = this.author;
 	            var url  = null;
 	            if(this.materialId == null){
 	               url = Url.ADD_MATERIAL;
