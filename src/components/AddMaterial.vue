@@ -225,7 +225,7 @@
                   
                     var obj = JSON.parse(response)
                      this.coverFileId = obj.data.id
-                     this.imageFile = obj.data.url
+                     this.imageFile = DOWNLOAD_URL +"/"+ obj.data.id;
                      let url = Url.ADD_IMAGE;
                     let params = {}
                     params.file_id =  this.coverFileId 

@@ -1,9 +1,9 @@
 (function(){
     var CONTEXT = "http://wx.mljia.cn/wechat";
 
-    var UPLOAD_URL = "http://upload.mljia.cn/upload/image";
+    var UPLOAD_URL = "http://upload.mljia.cn/upload/cloud/image";
 
-
+    var DOWNLOAD_URL = "http://dl.mljia.cn";
 
     var Url={
         MENU:CONTEXT +"/admin/sys/menu",
@@ -58,6 +58,7 @@
     };
     window.Url=Url;
     window.UPLOAD_URL = UPLOAD_URL;
+    window.DOWNLOAD_URL = DOWNLOAD_URL;
     /*::::::::::::::::::::::::::::::::::::::::::::::::::::::
      菜单配置url
      ::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
