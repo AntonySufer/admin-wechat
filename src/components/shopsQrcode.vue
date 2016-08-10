@@ -165,18 +165,19 @@
         methods:{
             updateData (){
                 let params = {};
-                params.offset = this.curPage;
-                params.limit = this.rows;
+                if(this.isSearch==false){
+                    params.offset = this.curPage;
+                    params.limit = this.rows;
+                }else{
+                    console.log("search");
+                    if(this.timeObj != null){
+                        params.start_time= this.timeObj.start_time.getTime() ;
+                        params.end_time= this.timeObj.end_time.getTime()
+                    }
+                    params.city=encodeURI(this.selectCity);
+                    params.shop_name= encodeURI(this.searchShop);
 
-
-                if(this.timeObj != null){
-                    params.start_time= this.timeObj.start_time.split("T")[0] ;
-                    params.end_time= this.timeObj.end_time.split("T")[0]
                 }
-                params.city=encodeURI(this.selectCity);
-                console.log("params.city:",params.city);
-                params.shop_name= encodeURI(this.selectShops);
-
 
                 var url = Url.FETCH_SHOP_LIST;
                 var self = this;
@@ -184,7 +185,9 @@
                     var content = response;
 
                     if(content.returnCode =="success"){
+
                         if(content.shops.length>0){
+                            self.isSearch=false;
                             this.shoplistData = content.shops;
                         }
 
@@ -253,6 +256,7 @@
 
             },
             searchItem(){
+                this.isSearch=true;
                 this.updateData();
             },
             downLoadQrcode(shopNum){

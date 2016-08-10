@@ -44,14 +44,14 @@
     </div>
 </template>
 <style>
-    .page-body-download{text-align:center;width:630pt;margin: 0px auto;}
+    .page-body-download{text-align:center;width:630pt;margin: 0px auto;position:relative;left: 12px;}
    .cavans_container{display: inline-block;margin-left: 15px;}
-   .cavas_text{padding: 5px; border: 1px solid gray;background-color: #ffffff; border-bottom: 0px solid gray}
+   .cavas_text{padding: 10px; border: 1px solid #dadada;background-color: #ffffff; border-bottom: 0px solid gray}
     .shopName{text-align: center;font-weight:600}
     .shopNo{text-align: center;position:relative;top:-14px; }
-    .text_info{line-height: 40px; border: 1px solid gray;height:40px;background-color: #ffffff;border-top: 0px solid gray; }
+    .text_info{line-height: 40px; border: 1px solid #dadada;height:40px;background-color: #ffffff;border-top: 0px solid #dadada; }
     canvas{display: block}
-    canvas:nth-child(2){margin-top: 10px;border-top: 1px solid gray;padding-top: 7px; }
+    canvas:nth-child(2){margin-top: 10px;border-top: 1px solid #dadada;padding-top: 10px; }
 
 
 </style>
@@ -91,12 +91,12 @@
                     render: 'canvas',
                     correctLevel: 0,
                     text: item.codeUrl ,
-                    size: 190,
-                    background: '#eeeeee',
-                    foreground: '#667766',
-                    pdground: '#00aaee',
+                    size: 223,
+                    background: '#ffffff',
+                    foreground: '#000000',
+                    pdground: '#000000',
                     image : DOWNLOAD_URL+"/"+item.logoName ,
-                    imageSize :25
+                    imageSize :35
                 });
                 if(item.logoName){
                    qrnode.id=item.shopNo;
@@ -105,7 +105,7 @@
                     ctx.lineWidth = 10;
                     ctx.strokeStyle = "#fff";
 
-                    ctx.strokeRect(103, 103, 31, 31);
+                    ctx.strokeRect(117, 117, 45, 45);
                 }
 
 
