@@ -1,9 +1,11 @@
 (function(){
-    var CONTEXT = "http://wx.mljia.cn/wechat";
+    var CONTEXT = "http://wx.mljiadev.cn/wechat";
 
-    var UPLOAD_URL = "http://upload.mljia.cn/upload/cloud/image";
+    var UPLOAD_URL = "http://upload.mljiadev.cn/upload/cloud/image";
 
-    var DOWNLOAD_URL = "http://dl.mljia.cn";
+    var DOWNLOAD_URL = "http://dl.mljia.cn/download/image";
+
+    var MPSERVER ="http://wx.mljiadev.cn/mp"
 
     var Url={
         MENU:CONTEXT +"/admin/sys/menu",
@@ -55,6 +57,17 @@
           ADD_IMAGE : CONTEXT +"/admin/image/add",
         /**删除图片 */
           DEL_IMAGE : CONTEXT + "/admin/image/del",
+        /* 获取店铺列表 */
+         FETCH_SHOP_LIST :MPSERVER + "/shop/list",
+        /* 获取店铺关注二维码  */
+        FETCH_SINGLE_SHOP_FOCUS_QRCODE: MPSERVER+"/shop",
+        /* 批量获取店铺关注二维码 */
+        FETCH_BATCH_SHOP_FOCUS_QRCODE : MPSERVER +"/shop/batch/qrcode",
+        /* 批量获取店铺支付二维码 */
+        FETCH_BATCH_SHOP_PAY_QECODE : MPSERVER +"/shop/batch/pay/qrcode",
+        /* 获取单个店铺支付二维码 */
+        FETVH_SINGLE_SHOP_PAY_QRCODE : MPSERVER + "/shop/"
+
     };
     window.Url=Url;
     window.UPLOAD_URL = UPLOAD_URL;
