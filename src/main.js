@@ -18,6 +18,7 @@ Vue.filter('date', function (value,format) {
   return moment(new Date(value)).format(format)
 })
 
+
 directive(Vue)
 
 var router = new VueRouter()
