@@ -34,8 +34,16 @@ export function configRouter (router) {
 					    },
 					    "/comment/list":{
 					    	name:'commentList',
-							 component: require('./components/Comment.vue'),
+							component: require('./components/Comment.vue'),
 					    },
+				   		"/shops/qrcode":{
+							name:"qrcode",
+							component: require("./components/shopsQrcode.vue"),
+						},
+				   		"/download/shopsQRcode":{
+							name:"downloadQrcode",
+							component: require("./components/downloadShopsQrcode.vue"),
+						},
 					    "/unexport/material":{
 					    	name:'unexportMaterial',
 							 component: require('./components/UnExportMaterial.vue'),
