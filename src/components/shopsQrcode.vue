@@ -10,8 +10,8 @@
        <div class="page-body">
            <div>
                <h5>搜索条件</h5>
-               <select name="选择城市" class="shop_sel" v-model="selectCity"  >
-                   <option value="0" selected="selected">选择城市</option>
+               <select name="选择城市" class="shop_sel" v-model="selectCity" @change="changeSelectCity"  >
+                   <option value="" selected="selected">选择城市</option>
                    <template  v-for="item in shopNameList" >
                        <option  >{{ item.name }}</option>
                    </template>
@@ -19,9 +19,9 @@
 
                </select>
 
-               <input type="text" class="form-control conten_width time_width" placeholder="选择时间" v-date-range-picker="timeObj" :options="{format:'YYYY-MM-DD',language:'zh'}"/>
-               <input type="text" class="form-control conten_width" v-model="searchShop" placeholder="输入店铺号名称/编号"/>
-               <div class="searchBtn" @click="searchItem" >搜索</div>
+               <input type="text" class="form-control conten_width time_width" placeholder="选择时间" v-date-range-picker="timeObj"  :options="{format:'YYYY-MM-DD',language:'zh'}"/>
+               <input type="text" class="form-control conten_width" @keyup="enterKeySearch" v-model="searchShop" placeholder="输入店铺号名称/编号"/>
+               <div class="searchBtn" @click="searchItem"   >搜索</div>
            </div>
 
            <div class="shop_lis" >
@@ -36,6 +36,7 @@
                        </div>
                        <div class="float_head pos">开通时间</div>
                        <div class="float_head pos">所在城市</div>
+                       <div class="float_head pos">店铺编号</div>
                        <div class="float_head pos">店铺名称</div>
                        <div class="float_head pos">操作</div>
                        <div class="clear_float pos"></div>
@@ -47,10 +48,11 @@
                                <div  class="float_head ">
                                    <input type="checkbox"   id="{{item.shopNo }}" value="{{item.shopNo }}"  v-model="pickedShops"   /><span class="slect_all">{{ index+1 }}</span>
                                </div>
-                               <div class="float_head pos">{{ item.openTime}}</div>
-                               <div class="float_head pos">{{item.city ? item.city : "--"}}</div>
-                               <div class="float_head pos">{{item.shopName}}</div>
-                               <div class="float_head pos down_qr" @click="downLoadQrcode(item.shopNo)">下载二维码</div>
+                               <div class="float_head pos text-overflow">{{ item.openTime}}</div>
+                               <div class="float_head pos text-overflow">{{item.city ? item.city : "--"}}</div>
+                               <div class="float_head pos text-overflow">{{item.shopNo}}</div>
+                               <div class="float_head pos text-overflow">{{item.shopName}}</div>
+                               <div class="float_head pos down_qr text-overflow" @click="downLoadQrcode(item.shopNo)">下载二维码</div>
 
                            </div>
                        </template>
@@ -73,6 +75,14 @@
 
 </template>
 <style>
+    .text-overflow {
+        display:block;/*内联对象需加*/
+        /*width:31em*/;/*指定宽度*/
+        word-break:keep-all;/* 不换行 */
+        white-space:nowrap;/* 强制在同一行内显示所有文本，直到文本结束或者遭遇 br 对象。不换行 */
+        overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+        text-overflow:ellipsis;/* IE 专有属性，当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    }
     .conten_width{width: 150px;display: inline-block}
     .shop_list{}
     .shop_sel{height: 35px;}
@@ -87,7 +97,7 @@
     .checkbox{display: inline-block;width: 20px;height: 20px;border: 0px solid darkseagreen;background-color: #fff;margin-left: 5px;}
     .checkbox_text{ display: inline-block;width: 40px; height: 20px; margin-top:-5px; position: relative;top:-15px;margin-left: 5px; }
     .float_head{ display: inline-block;width: 65px;}
-     .pos{position: relative;font-size: 14px;width: 20%;text-align:center;top:-3px;}
+     .pos{position: relative;font-size: 14px;width: 18%;text-align:center;top:-3px;}
     .down_qr{ color: #5fa6d3;cursor:pointer }
     .pagePlugin{ margin-left: 7px;margin-top: 15px;}
 
@@ -101,8 +111,8 @@
         data(){
             return{
                 shopNameList:[  {name:"深圳市"},{name:"广州市"},
-                                {name:"上海市"},{name:"苏州市"},{name:"重庆市"},
-                                {name:"重庆市"},{name:"长沙市"},{name:"郑州市"},{name:"武汉市"},{name:"成都市"}],
+                                {name:"上海市"},{name:"苏州市"},
+                                {name:"重庆市"},{name:"长沙市"},{name:"郑州市"},{name:"武汉市"},{name:"成都市"},{name:"南京市"}],
                 shoplistData:[],
                 selectCity:"",
                 searchShop:"",
@@ -127,12 +137,13 @@
                     }else {
                         return true
                     }
-                   // return this.checkedCount == 12;
-
                 },
                 set:function(value){
+                    console.log("value:"+ value);
+
                     if(value){
-                        var sliceShoplistData=this.shoplistData.slice(0,6)
+                        var sliceShoplistData=this.shoplistData.slice(0,6);
+
                         this.pickedShops = sliceShoplistData.map(function(item){
                             return item.shopNo
                         })
@@ -145,13 +156,17 @@
             checkedCount:{
                 get: function(){
                     return this.pickedShops.length;
-
                 }
             }
+
 
         },
 
         ready(){
+            this.$parent.menucompact=false;
+
+        },
+        beforeDestroy(){
 
         },
 
@@ -165,19 +180,33 @@
         methods:{
             updateData (){
                 let params = {};
-                if(this.isSearch==false){
-                    params.offset = this.curPage;
-                    params.limit = this.rows;
-                }else{
+                if(this.isSearch){
                     console.log("search");
                     if(this.timeObj != null){
-                        params.start_time= this.timeObj.start_time.getTime() ;
-                        params.end_time= this.timeObj.end_time.getTime()
+                       // (new Date()).format("yyyy-M-d h:m:s.S")
+                        params.start_time=(new Date(this.timeObj.start_time.getTime())).formats("yyyy-M-d");
+                        params.end_time=(new Date( this.timeObj.end_time.getTime())).formats("yyyy-M-d")
                     }
-                    params.city=encodeURI(this.selectCity);
-                    params.shop_name= encodeURI(this.searchShop);
+                    if(this.selectCity){
+                        params.city=encodeURI(this.selectCity);
+                    }
+
+                    if(this.searchShop){
+                        params.shop_name= encodeURI(this.searchShop);
+                    }
+
+                    params.offset = (this.curPage-1)* this.rows;
+                    params.limit = this.rows;
+                }else {
+                    params.offset = (this.curPage-1)* this.rows;
+                    params.limit = this.rows;
+
 
                 }
+
+                var index = layer.load(1, {
+                    shade: [0.1,'#fff'] //0.1透明度的白色背景
+                });
 
                 var url = Url.FETCH_SHOP_LIST;
                 var self = this;
@@ -185,18 +214,21 @@
                     var content = response;
 
                     if(content.returnCode =="success"){
+                        layer.close(index);
 
                         if(content.shops.length>0){
-                            self.isSearch=false;
+                            //self.isSearch=false;
                             this.shoplistData = content.shops;
+                        }else {
+                            this.shoplistData=""
                         }
 
 
-                        this.totalRows = content.pageCount;
-                        if(content.pageCount%this.rows == 0){
-                            this.totalPage = Math.floor(content.pageCount/this.rows) ;
+                        this.totalRows = content.totalCount;
+                        if(content.totalCount%this.rows == 0){
+                            this.totalPage = Math.floor(content.totalCount/this.rows) ;
                         }else{
-                            this.totalPage = Math.floor(content.pageCount/this.rows) +1;
+                            this.totalPage = Math.floor(content.totalCount/this.rows) +1;
                         }
 
                     }else {
@@ -218,6 +250,10 @@
                     params.shop_nos= this.pickedShops.join("|");
                 var url = Url.FETCH_BATCH_SHOP_FOCUS_QRCODE;
 
+                var index = layer.load(1, {
+                    shade: [0.1,'#fff'] //0.1透明度的白色背景
+                });
+
                 ajaxUtil.doGet(url,params).then((xhr,response)=>{
                     if(response.returnCode=="success"){
                         console.log("response:",response);
@@ -233,6 +269,7 @@
                     ajaxUtil.doGet(url,params).then((xhr,response)=>{
 
                         if(response.returnCode == "success"){
+                            layer.close(index);
                             console.log("支付",response.payCodes);
 
                             store.remove("payQrcodeList");
@@ -256,8 +293,18 @@
 
             },
             searchItem(){
-                this.isSearch=true;
+                //this.isSearch=true;
                 this.updateData();
+            },
+            changeSelectCity(){
+
+                this.updateData();
+
+            },
+            enterKeySearch(event){
+                if(event.keyCode == "13"){
+                    this.updateData();
+                }
             },
             downLoadQrcode(shopNum){
                 var _this = this;
@@ -274,7 +321,7 @@
                         store.set('qrCodeList',content.code);
 
 
-                        var url =Url.FETVH_SINGLE_SHOP_PAY_QRCODE+shopNum+"/pay/qrcode"
+                        var url =Url.FETCH_SINGLE_SHOP_PAY_QRCODE+shopNum+"/pay/qrcode"
                         ajaxUtil.doGet(url,{}).then((xhr,response)=>{
                             if(response.returnCode =="success"){
 
@@ -311,7 +358,53 @@
             },
             pickedShops(newVal,oldVal){
                 if(newVal.length>6){
-                    this.pickedShops=this.pickedShops.splice(0,7) ;
+                    this.pickedShops=newVal.splice(0,5);
+
+                }
+            },
+            /* 监控是否是搜索模式 */
+            timeObj(newVal,oldVal){
+                if(newVal){
+                    this.isSearch=true
+                }else {
+                    if(this.selectCity || this.searchShop ){
+                        this.isSearch=true
+                    }else {
+                        this.isSearch=false
+                    }
+
+                }
+            },
+            searchShop(newVal,oldVal){
+              if(newVal){
+                  this.isSearch=true
+              }else {
+                  if(this.selectCity || this.timeObj){
+                      this.isSearch=true;
+                  }else{
+                      this.isSearch=false;
+                  }
+
+              }
+            },
+            selectCity(newVal,oldVal){
+                if(newVal){
+                    this.isSearch=true
+                }else {
+                    if (this.timeObj || this.searchShop){
+                        this.isSearch=true;
+                    }else{
+                        this.isSearch=false
+                    }
+
+
+                }
+
+            },
+            /* 监控 由 搜索模式回到 非搜索模式 加载数据*/
+            isSearch(newVal,oldVal){
+                if(!newVal && oldVal){
+                    this.updateData()
                 }
             }
         }

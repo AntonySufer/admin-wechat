@@ -54,22 +54,20 @@
     <!-- Page Container -->
     <div class="page-container">
         <!-- Page Sidebar -->
-        <div class="page-sidebar" id="sidebar" :class="{'menu-compact':menucompact==true,'hide':hide==true}">
+        <div class="page-sidebar" id="sidebar" :class="{'menu-compact hiden-menu':menucompact==true,'hide':hide==true}">
             <!-- Page Sidebar Header-->
-
-            <!-- /Page Sidebar Header -->
             <!-- Sidebar Menu -->
-            <ul class="nav sidebar-menu">
 
-		       <Menu v-for="function in functions" :func="function" :menuindex.sync="activeIndex" :itemindex.sync="itemIndex" :user="user">
-		    </ul>
+		   <Menu v-for="function in functions" :func="function" :menuindex.sync="activeIndex" :itemindex.sync="itemIndex" :user="user">
+                </Menu>
+
         </div>
         <!-- Page Sidebar -->
 
         <div class="page-content">
 
                  <router-view></router-view>
-            </div>
+        </div>
     </div>
 
 
@@ -128,6 +126,7 @@ export default {
 	  },
       toggle(){
           this.menucompact = !this.menucompact;
+
       }
   },
   computed:{
@@ -145,4 +144,5 @@ export default {
 body {
   font-family: Helvetica, sans-serif;
 }
+    .hiden-menu{display: none}
 </style>

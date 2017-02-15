@@ -1,25 +1,28 @@
 <template>
+    <ul class="nav sidebar-menu">
 
-     <li v-if="func.isLeaf==0" :class="{active:itemindex == func.id}">
-         <a  v-link="{ path: func.path }"   @click="toggleItem(func.id)">
-             <span class="menu-text">{{func.label}}</span>
+      <li v-if="func.isLeaf==0" :class="{active:itemindex == func.id}">
+          <a  v-link="{ path: func.path }"   @click="toggleItem(func.id)">
+              <span class="menu-text">{{func.label}}</span>
           </a>
-     </li>
-     
-    <li v-else :class="{active:itemindex == func.id,open:itemindex ==func.id}" >
-	     <a class="menu-dropdown"  :class="{'am-collapsed': menuindex == func.id}"  @click="toggle" :class="{active:itemindex == item.id}" >
-	          <span class="menu-text">{{func.label}} </span>
-               <i class="menu-expand"></i>
-         </a>
-         <ul class="submenu" :style="{display:display}">
-              <li v-for="item in func.functions">
-                   <a v-link="{ path: item.path}" @click="toggleItem(item.id)">
-                        <span class="menu-text">{{item.label}}</span>
-                   </a>
-              </li>
-         </ul>
+      </li>
 
-    </li>
+      <li v-else :class="{active:itemindex == func.id,open:itemindex ==func.id}" >
+          <a class="menu-dropdown"  :class="{'am-collapsed': menuindex == func.id}"  @click="toggle" :class="{active:itemindex == item.id}" >
+              <span class="menu-text">{{func.label}} </span>
+              <i class="menu-expand"></i>
+          </a>
+          <ul class="submenu" :style="{display:display}">
+              <li v-for="item in func.functions">
+                  <a v-link="{ path: item.path}" @click="toggleItem(item.id)">
+                      <span class="menu-text">{{item.label}}</span>
+                  </a>
+              </li>
+          </ul>
+
+      </li>
+
+  </ul>
 
 </template>
 <script>

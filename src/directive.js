@@ -7,22 +7,24 @@ Vue.directive('date-range-picker', {
     
   bind: function () {
     moment.locale('zh-cn');
-     var self = this
+     var self = this;
+
+      console.log("self.params.options.format:",self.params.options.format);
      $(this.el).daterangepicker({
-       opens:'centre',
-       format:this.params.options.format,
-       "drops": "down",
+           opens:'centre',
+           format:self.params.options.format,
+           "drops": "down",
            locale: {
-           applyLabel: '确定',
-           cancelLabel: '取消',
-           fromLabel: '从',
-           toLabel: '到',
-           weekLabel: 'W',
-           customRangeLabel: 'Custom Range',
-           daysOfWeek:moment.weekdaysMin(),
-           monthNames: moment.monthsShort(),
-           firstDay: 0
-         }
+               applyLabel: '确定',
+               cancelLabel: '取消',
+               fromLabel: '从',
+               toLabel: '到',
+               weekLabel: 'W',
+               customRangeLabel: 'Custom Range',
+               daysOfWeek:moment.weekdaysMin(),
+               monthNames: moment.monthsShort(),
+               firstDay: 0
+            }
 	     
      },function(start, end, label) {
          console.log(start.date())

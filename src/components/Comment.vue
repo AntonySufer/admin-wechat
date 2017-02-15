@@ -13,7 +13,7 @@
           <div class="col-xs-12 col-md-12">
             <div class="well with-header  with-footer">
 	             <div class="comment" v-for="item in items">
-                     <img src="{{item.head_image}}" alt="" class="comment-avatar">
+                     <img  v-bind:src="item.head_image" alt="" class="comment-avatar">
                      <div class="comment-body">
                          <div class="comment-text">
                             <div class="comment-header">
@@ -27,9 +27,9 @@
                                         placement="bottom"  v-for="imgUrl in item.image_list">
                                           
                                        
-	                                         <img slot="tooltip-inner" src="{{imgUrl}}" width="300"  slot="modal-body"></img>
+	                                         <img slot="tooltip-inner" v-bind:src="imgUrl"  width="300"  slot="modal-body"></img>
 
-                                                <img  src="{{imgUrl}}" style="width:65px; height:65px;"  class="img-rounded"></img>
+                                                <img v-bind:src="imgUrl" style="width:65px; height:65px;"  class="img-rounded"></img>
                                         
                                        
                                         
@@ -99,6 +99,7 @@ export default {
 
         var items = JSON.parse(content);
         this.items = items;
+        console.log("this.items:",this.items);
         this.totalRows = response.totalCount;
         if(response.totalCount%this.rows == 0){
 	         this.totalPage = Math.floor(response.totalCount/this.rows) ;

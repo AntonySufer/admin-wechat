@@ -112,7 +112,7 @@
 	</modal>
 
 
-     <modal :show.sync="showTagRel" title="导入美丽秘籍" width="1000px"> 										  
+     <modal :show.sync="showTagRel" title="导入美丽秘籍" width="1000px">
            <div slot="modal-body" >
                   <tag-rels :tag-id.sync="tagId"></tag-rels>
            </div>
@@ -225,7 +225,7 @@
                   
                     var obj = JSON.parse(response)
                      this.coverFileId = obj.data.id
-                     this.imageFile = DOWNLOAD_URL +"/"+ obj.data.id;
+                     this.imageFile = imgDownLoadUrl +"/"+ obj.data.id;
                      let url = Url.ADD_IMAGE;
                     let params = {}
                     params.file_id =  this.coverFileId 

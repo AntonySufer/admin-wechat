@@ -5,7 +5,9 @@
 
     var DOWNLOAD_URL = "http://dl.mljia.cn/download/image";
 
-    var MPSERVER ="http://wx.mljiadev.cn/mp"
+    var imgDownLoadUrl= "http://dl.mljia.cn/";
+
+    var MPSERVER ="http://wx.mljiadev.cn/mp";
 
     var Url={
         MENU:CONTEXT +"/admin/sys/menu",
@@ -66,15 +68,66 @@
         /* 批量获取店铺支付二维码 */
         FETCH_BATCH_SHOP_PAY_QECODE : MPSERVER +"/shop/batch/pay/qrcode",
         /* 获取单个店铺支付二维码 */
-        FETVH_SINGLE_SHOP_PAY_QRCODE : MPSERVER + "/shop/"
+        FETCH_SINGLE_SHOP_PAY_QRCODE : MPSERVER + "/shop/",
+
+        /* 1.3.3  添加的接口  antony*/
+        /* 获取美丽秘籍素材list*/
+        FETCH_BEAUTIFUL_LIST: MPSERVER+ "/fodder/type/list",
+        /* 编辑美丽秘籍素材*/
+        FETCH_BEAUTIFUL_EDIT: MPSERVER+ "/fodder/type/edit",
+        /* 美丽秘籍素材排序*/
+        FETCH_BEAUTIFUL_SORT: MPSERVER+ "/fodder/type/sort",
+        /* 所有美丽秘籍素材文章list*/
+        FETCH_BEAUTIFUL_MATlIST: MPSERVER+ "/fodder/wx/list",
+        /* 美丽秘籍文章添加到类型下*/
+        FETCH_MATlIST_ADD: MPSERVER+ "/fodder/memory/add",
+        /* 某类型美丽秘籍列表*/
+        FETCH_TYPE_LIST: MPSERVER+ "/fodder/memory/list",
+        /* 某类型美丽秘籍文章  删除or 设为头条*/
+        FETCH_TYPE_EDIT: MPSERVER+ "/fodder/memory/edit",
+        /* 某类型美丽秘籍文章 排序*/
+        FETCH_TYPE_SORT: MPSERVER+ "/fodder/memory/sort",
+        /* 设置服务号菜单*/
+        FETCH_MENU_SET: MPSERVER+ "/medit/create",
+        /* 服务号意见反馈s */
+        FETCH_SERVER_IDEA_FEEDBACK: MPSERVER+ "/feedback/list"
 
     };
     window.Url=Url;
     window.UPLOAD_URL = UPLOAD_URL;
     window.DOWNLOAD_URL = DOWNLOAD_URL;
+    window.imgDownLoadUrl =imgDownLoadUrl;
     /*::::::::::::::::::::::::::::::::::::::::::::::::::::::
      菜单配置url
      ::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // (new Date()).format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+    // (new Date()).format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+    if(!Date.prototype.formats){
+        Date.prototype.formats =function(format){
+            var o = {
+                "M+" : this.getMonth()+1, //month
+                "d+" : this.getDate(), //day
+                "h+" : this.getHours(), //hour
+                "m+" : this.getMinutes(), //minute
+                "s+" : this.getSeconds(), //second
+                "q+" : Math.floor((this.getMonth()+3)/3), //quarter
+                "S" : this.getMilliseconds() //millisecond
+            };
+            if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+                (this.getFullYear()+"").substr(4- RegExp.$1.length));
+            for(var k in o)if(new RegExp("("+ k +")").test(format))
+                format = format.replace(RegExp.$1,
+                    RegExp.$1.length==1? o[k] :
+                        ("00"+ o[k]).substr((""+ o[k]).length));
+            return format;
+        };
+    }
     
     
     

@@ -36,6 +36,10 @@ export function configRouter (router) {
 					    	name:'commentList',
 							component: require('./components/Comment.vue'),
 					    },
+				   		"/server/idea/feedback":{
+							name:"serverComment",
+							component:require("./components/serverComment.vue"),
+						},
 				   		"/shops/qrcode":{
 							name:"qrcode",
 							component: require("./components/shopsQrcode.vue"),
@@ -44,6 +48,18 @@ export function configRouter (router) {
 							name:"downloadQrcode",
 							component: require("./components/downloadShopsQrcode.vue"),
 						},
+					   "/beautiful": {
+						   name: "beautiful", //美丽秘籍
+						   component: require("./components/beautiful.vue")
+					   },
+					   "/beautiful/setArticle/:typeId": {
+						   name: "setArticle", //设置文章
+						   component: require("./components/setArticle.vue"),
+					   },
+					   "/menuSet": {
+						   name: "menuSet", //设置服务号菜单
+						   component: require("./components/menuSet.vue"),
+					   },
 					    "/unexport/material":{
 					    	name:'unexportMaterial',
 							 component: require('./components/UnExportMaterial.vue'),
@@ -63,28 +79,28 @@ export function configRouter (router) {
 					    "/index":{
 						      component: require('./components/Index.vue')
 					    }
-					 
+
 		        }
-		        
-	    },   
+
+	    },
 	   '*': {
 	          component: require('./components/Index.vue')
 	     }
 
-    
+
   })
 
 	router.beforeEach(function (transition) {
-           
+
 		     if(store.get('user') == null){
 			     router.go({"path":"/login",append: false});
 			       transition.next();
 		     }else{
 		        transition.next();
 	     }
-	      
-	  
-	       
-	  
+
+
+
+
 	})
 }

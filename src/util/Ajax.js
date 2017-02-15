@@ -6,9 +6,11 @@ export function decodeContent(content){
 	return  libbase64.decode(content).toString("UTF-8");
 	
 }
+
 export function doGet(url,params){    
 	var user = store.get("user");
-	
+
+
 	var config={cache:true};
 	if(params == null){
 		params = {};
